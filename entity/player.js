@@ -78,13 +78,13 @@ Player.prototype.move = function (keys, world) {
   var trigger = _.find(tile.children, function (child) { return child.props.trigger })
   var inside = trigger.contains(current.translation)
 
-  if (inside && !self.inside) {
-    self.emit('enter', { tile: self.coordinates(), position: self.geometry.transform })
-    self.inside = true
-  } else if (!inside && self.inside) {
-    self.emit('exit', { tile: self.coordinates(), position: self.geometry.transform })
-    self.inside = false
-  }
+  // if (inside && !self.inside) {
+  //   self.emit('enter', { tile: self.coordinates(), position: self.geometry.transform })
+  //   self.inside = true
+  // } else if (!inside && self.inside) {
+  //   self.emit('exit', { tile: self.coordinates(), position: self.geometry.transform })
+  //   self.inside = false
+  // }
 
   var delta
   var correction
@@ -105,25 +105,26 @@ Player.prototype.move = function (keys, world) {
     }
 
     self.geometry.update(delta)
-    correction = self.collision.handle(world, self.geometry, delta)
+    // correction = self.collision.handle(world, self.geometry, delta)
 
-    if (correction) {
-      self.geometry.update(correction)
-      self.waiting = true
-      self.movement.tile.reset()
-    }
-  } else {
+    // if (correction) {
+    //   self.geometry.update(correction)
+    //   self.waiting = true
+    //   self.movement.tile.reset()
+    // }
+  } 
+  else {
     self.waiting = true
     self.moving = true
     self.movement.tile.reset()
 
     delta = self.movement.path.compute(keys, current)
-    correction = self.collision.handle(world, self.geometry, delta)
+    // correction = self.collision.handle(world, self.geometry, delta)
 
-    if (correction && !self.reversing) {
-      self.reversing = true
-      self.geometry.update(correction)
-    }
+    // if (correction && !self.reversing) {
+    //   self.reversing = true
+    //   self.geometry.update(correction)
+    // }
 
     if (self.reversing) {
       delta = self.movement.deadend.compute(keys, current)
