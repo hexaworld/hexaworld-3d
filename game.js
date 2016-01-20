@@ -13,6 +13,8 @@ var hexrgb = require('hex-rgb')
 module.exports = function (canvas, schema, opts) {
   opts = opts || {size: 700}
 
+  console.log('hi')
+
   if (_.isString(canvas)) {
     var container = document.getElementById(canvas)
     var main = require('./ui/main.js')(container, opts)
@@ -84,7 +86,6 @@ module.exports = function (canvas, schema, opts) {
   relay(game, 'game', 'end')
 
   player.addTo(game)
-  //camera.addTo(game)
   world.addTo(game)
 
   keyboard.on('keydown', function (keyCode) {
@@ -105,16 +106,12 @@ module.exports = function (canvas, schema, opts) {
     camera.position = [line[1][0], line[1][1], 30]
   })
 
-  // camera.on('update', function (interval) {
-  //   if (camera.yoked) {
-  //     camera.transform.translation = player.position()
-  //     camera.transform.rotation = player.angle()
-  //   }
-  //   this.move(keyboard)
-  // })
-
   var camera = require('lookat-camera')()
   camera.up = [0, 0, 1]
+
+  var line = player.geometry.children[0].points
+  camera.target = [line[0][0], line[0][1], 5]
+  camera.position = [line[1][0], line[1][1], 30]
 
   var lights, cues
 

@@ -4,7 +4,8 @@
   "scripts": {
     "test": "standard",
     "build": "browserify index.js -o bundle.js",
-    "start": "budo index.js:bundle.js --watch"
+    "start": "budo index.js:bundle.js --watch",
+    "deploy": "surge . hexaworld-test.surge.sh"
   },
   "browserify": {
     "transform": [

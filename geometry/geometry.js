@@ -214,20 +214,20 @@ Geometry.prototype.drawSurface = function (gl, camera, lights) {
     }
   }
 
-  var color = self.props.color 
-    ? self.props.color.map(function (c) {return c / 255.0}) 
-    : [0.5, 0.5, 0.5]
+  var color = [0.5, 0.5, 0.5]
 
   camera.view(self.view)
 
   gl.enable(gl.DEPTH_TEST)
   gl.lineWidth(3 * (window.devicePixelRatio || 1))
 
+  eye(self.view, self.eye)
+
   if (this.geometry.fill) {
     self.geometry.fill.bind(self.shader.fill)
     self.shader.fill.uniforms.proj = self.proj
     self.shader.fill.uniforms.view = self.view
-    self.shader.fill.uniforms.eye = eye(self.view)
+    self.shader.fill.uniforms.eye = self.eye
 
     lights.forEach(function (light, i) {
       self.shader.fill.uniforms['lcol' + (i + 1)] = light.color
@@ -241,11 +241,11 @@ Geometry.prototype.drawSurface = function (gl, camera, lights) {
     self.geometry.fill.unbind()
   }
   
-  if (this.geometry.stroke) {
+  if (this.geometry.stroke & false) {
     self.geometry.stroke.bind(self.shader.stroke)
     self.shader.stroke.uniforms.proj = self.proj
     self.shader.stroke.uniforms.view = self.view
-    self.shader.stroke.uniforms.eye = eye(self.view)
+    self.shader.stroke.uniforms.eye = self.eye
     self.shader.stroke.uniforms.lit = self.props.lit ? 1.0 : 0.0
     self.shader.stroke.uniforms.color = [255, 255, 255]
     self.geometry.stroke.draw(gl.LINES)

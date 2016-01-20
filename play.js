@@ -166,8 +166,8 @@ module.exports = function (id, level) {
         energy.show()
         stages.show()
         main.show()
-      }, 1200)
-    }, 600) 
+      }, 300)
+    }, 300) 
   }
 
   function reload (updated) {
